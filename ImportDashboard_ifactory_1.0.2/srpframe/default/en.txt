@@ -1,0 +1,157 @@
+{
+    "dashboard": {
+        "url": "https://dashboard-advims-v2-mpm.wise-paas.cn",
+        "westUrl": "https://dashboard-grafana.wise-paas.com/d/jxU8FYIWz/test999?orgId=1",
+        "eastUrl": "https://dashboard-grafana.wise-paas.com/d/JR_bFYSWk/singlestat0712?orgId=1"
+    },
+    "title": {
+        "description": "Metal Processing Management System",
+        "westTitle": "Building Energy KPI",
+        "eastTitle": "Realtime Energy Usage"
+    },
+    "frame": {
+        "main": {},
+        "west": {
+            "isGrafana": true,
+            "addTitle": true,
+            "slideshow": false,
+            "slideshowInterval": "30s",
+            "urlList": [
+                {
+                    "url": "https://dashboard-grafana.wise-paas.com/d/jxU8FYIWz/test999?orgId=1"
+                }
+            ]
+        },
+        "east": {
+            "isGrafana": true,
+            "addTitle": true,
+            "slideshow": false,
+            "slideshowInterval": "30s",
+            "urlList": [
+                {
+                    "url": "https://dashboard-grafana.wise-paas.com/d/JR_bFYSWk/singlestat0712?orgId=1"
+                }
+            ]
+        }
+    },
+    "menu": {
+        "list": [
+            {
+                "title": "Work Order Production Management",
+                "id": "IWS_Menu1",
+                "list": [
+                    {
+                        "title": "Online Work Order",
+                        "type": "dashboard",
+                        "dashboard": "/d/rv1I3tqZk/online-work-order?orgId=1"
+                    },
+                    {
+                        "title": "Today Schedule",
+                        "type": "dashboard",
+                        "dashboard": "/d/58iiep3Wz/today-schedule?orgId=1"
+                    },
+                    {
+                        "title": "Unfinished and Overdue Work Order",
+                        "type": "dashboard",
+                        "dashboard": "/d/-uh1epqZk/unfinished-and-overdue-work-order?orgId=1"
+                    },
+                    {
+                        "title": "Production Efficiency Analysis",
+                        "type": "dashboard",
+                        "dashboard": "/d/wCyWg2qWz/production-efficiency-analysis?orgId=1"
+                    }
+                ]
+            },
+            {
+                "title": "Equipment Utilization Rate",
+                "id": "IWS_Menu2",
+                "list": [
+                    {
+                        "title": "Analysis of Equipment Utilization Rate",
+                        "type": "dashboard",
+                        "dashboard": "/d/NQ38Rh3Wz/analysis-of-equipment-utilization-rate?orgId=1"
+                    },
+                    {
+                        "title": "Management of Device history Status",
+                        "type": "dashboard",
+                        "dashboard": "/d/HNtGm2qWz/management-of-device-history-status?orgId=1"
+                    },
+                    {
+                        "title": "Statistics of Equipment Failure",
+                        "type": "dashboard",
+                        "dashboard": "/d/poFoih3Wz/statistics-of-equipment-failure?orgId=1"
+                    }
+                ]
+            },
+            {
+                "title": "Abnormal Management",
+                "id": "IWS_Menu3",
+                "list": [
+                    {
+                        "title": "Overview of Abnormality",
+                        "type": "dashboard",
+                        "dashboard": "/d/PiM0WhqZz/overview-of-abnormality?refresh=5m&orgId=1"
+                    },
+                    {
+                        "title": "Quality Analysis System",
+                        "type": "dashboard",
+                        "dashboard": "/d/_qdJG2qZk/quality-analysis-system?orgId=1"
+                    },
+                    {
+                        "title": "Analysis of Line-side Feeding Efficiency",
+                        "type": "dashboard",
+                        "dashboard": "/d/RAqf423Wz/analysis-of-line-side-feeding-efficiency?orgId=1"
+                    },
+                    {
+                        "title": "Analysis of Equipment Abnormality",
+                        "type": "dashboard",
+                        "dashboard": "/d/AeE7I2qWk/analysis-of-equipment-abnormality?orgId=1"
+                    }
+                ]
+            },
+            {
+                "title": "Staff Performance Management",
+                "id": "IWS_Menu3",
+                "list": [
+                    {
+                        "title": "Evaluation of Excellent Department and Staff",
+                        "type": "dashboard",
+                        "dashboard": "/d/hmU-ShqWk/evaluation-of-excellent-department-and-staff?orgId=1"
+                    }
+                ]
+            },
+            {
+                "title": "Equipment Billing",
+                "id": "IWS_Menu3",
+                "type": "dashboard",
+                "dashboard": "/d/iamE_Z3Wz/she-bei-ji-fei?refresh=1h&orgId=1"
+            }
+        ]
+    },
+    "alerting": {
+        "link": "https://dashboard-grafana.wise-paas.com",
+        "linkEnable": "false",
+        "api": "https://api-test-srpframe.wise-paas.com/test",
+        "webSocket": "wss://portal-rmm-develop.wise-paas.com/event/-1",
+        "visible": true,
+        "accumulative": false
+    },
+    "notice": {
+        "link": "https://dashboard-grafana.wise-paas.com",
+        "linkEnable": "true",
+        "api": "https://api-test-srpframe.wise-paas.com/test2",
+        "webSocket": "wss://portal-rmm-develop.wise-paas.com/event/-1",
+        "visible": true,
+        "accumulative": false
+    },
+    "marquee": {
+        "enable": "false",
+        "url": "https://api-test-srpframe.wise-paas.com/marqueetest",
+        "refresh": "never",
+        "text": "SRPFrame Demo"
+    },
+    "login": {
+        "visible": true
+    },
+    "refreshAlertNotice": "1m"
+}

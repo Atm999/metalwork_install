@@ -1,0 +1,1406 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_POSTGRESQL",
+      "label": "PostgreSQL",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "postgres",
+      "pluginName": "PostgreSQL"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "1.3.6"
+    },
+    {
+      "type": "panel",
+      "id": "natel-discrete-panel",
+      "name": "Discrete",
+      "version": "1.0.9"
+    },
+    {
+      "type": "datasource",
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "version": "5.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "singlestat",
+      "name": "Singlestat",
+      "version": "5.0.0"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1591074648668,
+  "links": [],
+  "mobileAuto": false,
+  "mobileUpgraded": true,
+  "panels": [
+    {
+      "adjustableFontSize": true,
+      "bgColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "bgThresholds": "",
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#ff7c7c",
+        "#feb64d",
+        "#5bc49f",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "compatibleThresholds": "50,80",
+      "createUid": "b80e02e4-9b20-4ad9-a938-ff696643457d",
+      "datasource": "${DS_POSTGRESQL}",
+      "decimals": 1,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": true,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "interval": null,
+      "isMath": false,
+      "isMathInputVal": false,
+      "isMathTip": false,
+      "isMathUpgrade": false,
+      "labelFontSize": "1.8vw",
+      "labelFontSizePX": "35px",
+      "labelFontSizeVW": "1.8vw",
+      "labelFontSizeVal": "150%",
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "mathInputVal": "",
+      "maxDataPoints": 100,
+      "metricRuleObjArr": [],
+      "nullPointMode": "connected",
+      "nullText": null,
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "postColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "postThresholds": "",
+      "postfix": " %",
+      "postfixFontSize": "1.8vw",
+      "postfixFontSizePX": "35px",
+      "postfixFontSizeVW": "1.8vw",
+      "postfixFontSizeVal": "120%",
+      "preColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "preThresholds": "",
+      "prefix": "",
+      "prefixFontSize": "1.8vw",
+      "prefixFontSizePX": "35px",
+      "prefixFontSizeVW": "1.8vw",
+      "prefixFontSizeVal": "120%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "?column?",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT a.utilization_rate*100\nfrom oee.utilization_rate_day a\nwhere to_char(a.insert_time,'yyyy-MM-dd')=to_char(now(),'yyyy-MM-dd') and a.machine_id=(SELECT id from common.machine where area_node_id = (SELECT id from common.area_node where name_cn = '$area') order by id asc limit 1 offset 0) ",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "title": "站位1稼动率",
+      "titleAdjFontSize": true,
+      "titleBgColor": "#008CD6",
+      "titleFontSize": "1vw",
+      "titleFontSizeVal": "80%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "titleTxtColor": "rgb(255, 255, 255)",
+      "transparentRange": 1,
+      "type": "singlestat",
+      "valueFontSize": "1vw",
+      "valueFontSizePX": "35px",
+      "valueFontSizeVW": "1.8vw",
+      "valueFontSizeVal": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "FontSize": "80%",
+      "FontSizeValue": "100%",
+      "adjFontSize": true,
+      "backgroundColor": "rgba(128,128,128,0.1)",
+      "colorMaps": [
+        {
+          "color": "#5bc49f",
+          "text": "运行"
+        },
+        {
+          "color": "#ff7c7c",
+          "text": "异常"
+        },
+        {
+          "color": "#feb64d",
+          "text": "待机"
+        },
+        {
+          "color": "#C8C8C8",
+          "text": "停机"
+        },
+        {
+          "color": "#60acfc",
+          "text": "换线"
+        },
+        {
+          "color": "#9287e7",
+          "text": "其他"
+        }
+      ],
+      "createUid": "c1a20b94-af6b-2995-da94-c7b902970f31",
+      "crosshairColor": "#8F070C",
+      "datasource": "${DS_POSTGRESQL}",
+      "display": "timeline",
+      "expandFromQueryS": 0,
+      "extendLastValue": true,
+      "gridPos": {
+        "h": 6,
+        "w": 20,
+        "x": 4,
+        "y": 0
+      },
+      "highlightOnMouseover": true,
+      "id": 4,
+      "legendSortBy": "-ms",
+      "lineColor": "rgba(0,0,0,0.1)",
+      "links": [],
+      "metricNameColor": "#000000",
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "rangeMaps": [
+        {
+          "from": "",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "rowHeight": 400,
+      "showLegend": true,
+      "showLegendNames": true,
+      "showLegendPercent": true,
+      "showLegendValues": true,
+      "showTimeAxis": true,
+      "targets": [
+        {
+          "alias": "",
+          "device": "select device",
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "plugin": "select plugin",
+          "rawQuery": true,
+          "rawSql": "select \r\n(case a.status_name\r\nwhen 'Run' then 1\r\nwhen 'Error' then 3\r\nwhen 'Idle' then 0\r\nwhen 'Off' then 2\r\nelse 6 end) as value,a.insert_time as time\r\nfrom oee.tricolor_tag_duration a\r\nwhere a.machine_id =(SELECT id from common.machine where area_node_id = (SELECT id from common.area_node where name_cn = '$area') order by id asc limit 1 offset 0) \r\nand to_char(a.insert_time::timestamp,'yyyy-MM-dd')=to_char(now(),'yyyy-MM-dd') \r\norder by a.insert_time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "sensor": "select sensor",
+          "timeColumn": "time",
+          "tsType": "ts",
+          "type": "timeserie",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "textSize": 24,
+      "textSizeTime": 14,
+      "timeTextColor": "#d8d9da",
+      "title": "",
+      "titleAdjFontSize": true,
+      "titleFontSize": "1.4vw",
+      "titleFontSizeVal": "100%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "transparentRange": 1,
+      "type": "natel-discrete-panel",
+      "units": "short",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "运行",
+          "value": "1"
+        },
+        {
+          "op": "=",
+          "text": "异常",
+          "value": "3"
+        },
+        {
+          "op": "=",
+          "text": "待机",
+          "value": "0"
+        },
+        {
+          "op": "=",
+          "text": "停机",
+          "value": "2"
+        },
+        {
+          "op": "=",
+          "text": "其他",
+          "value": "6"
+        }
+      ],
+      "valueTextColor": "#000000",
+      "writeAllValues": false,
+      "writeLastValue": true,
+      "writeMetricNames": false
+    },
+    {
+      "adjustableFontSize": true,
+      "bgColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "bgThresholds": "",
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#ff7c7c",
+        "#feb64d",
+        "#5bc49f",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "compatibleThresholds": "50,80",
+      "createUid": "6b272197-5898-28ab-39d5-1a2bc5be180b",
+      "datasource": "${DS_POSTGRESQL}",
+      "decimals": 1,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": true,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 6
+      },
+      "id": 7,
+      "interval": null,
+      "isMath": false,
+      "isMathInputVal": false,
+      "isMathTip": false,
+      "isMathUpgrade": false,
+      "labelFontSize": "1.8vw",
+      "labelFontSizePX": "35px",
+      "labelFontSizeVW": "1.8vw",
+      "labelFontSizeVal": "150%",
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "mathInputVal": "",
+      "maxDataPoints": 100,
+      "metricRuleObjArr": [],
+      "nullPointMode": "connected",
+      "nullText": null,
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "postColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "postThresholds": "",
+      "postfix": " %",
+      "postfixFontSize": "1.8vw",
+      "postfixFontSizePX": "35px",
+      "postfixFontSizeVW": "1.8vw",
+      "postfixFontSizeVal": "120%",
+      "preColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "preThresholds": "",
+      "prefix": "",
+      "prefixFontSize": "1.8vw",
+      "prefixFontSizePX": "35px",
+      "prefixFontSizeVW": "1.8vw",
+      "prefixFontSizeVal": "120%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "?column?",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT a.utilization_rate*100\nfrom oee.utilization_rate_day a\nwhere to_char(a.insert_time,'yyyy-MM-dd')=to_char(now(),'yyyy-MM-dd') and a.machine_id=(SELECT id from common.machine where area_node_id = (SELECT id from common.area_node where name_cn = '$area') order by id asc limit 1 offset 1) ",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "title": "站位2稼动率",
+      "titleAdjFontSize": true,
+      "titleBgColor": "#008CD6",
+      "titleFontSize": "1vw",
+      "titleFontSizeVal": "80%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "titleTxtColor": "rgb(255, 255, 255)",
+      "transparentRange": 1,
+      "type": "singlestat",
+      "valueFontSize": "1vw",
+      "valueFontSizePX": "35px",
+      "valueFontSizeVW": "1.8vw",
+      "valueFontSizeVal": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "FontSize": "80%",
+      "FontSizeValue": "100%",
+      "adjFontSize": true,
+      "backgroundColor": "rgba(128,128,128,0.1)",
+      "colorMaps": [
+        {
+          "color": "#5bc49f",
+          "text": "运行"
+        },
+        {
+          "color": "#ff7c7c",
+          "text": "异常"
+        },
+        {
+          "color": "#feb64d",
+          "text": "待机"
+        },
+        {
+          "color": "#C8C8C8",
+          "text": "停机"
+        },
+        {
+          "color": "#60acfc",
+          "text": "换线"
+        },
+        {
+          "color": "#9287e7",
+          "text": "其他"
+        }
+      ],
+      "createUid": "3e9f9c93-d88e-a04b-3766-acdc47dd3416",
+      "crosshairColor": "#8F070C",
+      "datasource": "${DS_POSTGRESQL}",
+      "display": "timeline",
+      "expandFromQueryS": 0,
+      "extendLastValue": true,
+      "gridPos": {
+        "h": 6,
+        "w": 20,
+        "x": 4,
+        "y": 6
+      },
+      "highlightOnMouseover": true,
+      "id": 14,
+      "legendSortBy": "-ms",
+      "lineColor": "rgba(0,0,0,0.1)",
+      "links": [],
+      "metricNameColor": "#000000",
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "rangeMaps": [
+        {
+          "from": "",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "rowHeight": 400,
+      "showLegend": true,
+      "showLegendNames": true,
+      "showLegendPercent": true,
+      "showLegendValues": true,
+      "showTimeAxis": true,
+      "targets": [
+        {
+          "alias": "",
+          "device": "select device",
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "plugin": "select plugin",
+          "rawQuery": true,
+          "rawSql": "select \r\n(case a.status_name\r\nwhen 'Run' then 1\r\nwhen 'Error' then 3\r\nwhen 'Idle' then 0\r\nwhen 'Off' then 2\r\nelse 6 end) as value,a.insert_time as time\r\nfrom oee.tricolor_tag_duration a\r\nwhere a.machine_id =(SELECT id from common.machine where area_node_id = (SELECT id from common.area_node where name_cn = '$area') order by id asc limit 1 offset 1) \r\nand to_char(a.insert_time::timestamp,'yyyy-MM-dd')=to_char(now(),'yyyy-MM-dd') \r\norder by a.insert_time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "sensor": "select sensor",
+          "timeColumn": "time",
+          "tsType": "ts",
+          "type": "timeserie",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "textSize": 24,
+      "textSizeTime": 14,
+      "timeTextColor": "#d8d9da",
+      "title": "",
+      "titleAdjFontSize": true,
+      "titleFontSize": "1.4vw",
+      "titleFontSizeVal": "100%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "transparentRange": 1,
+      "type": "natel-discrete-panel",
+      "units": "short",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "运行",
+          "value": "1"
+        },
+        {
+          "op": "=",
+          "text": "异常",
+          "value": "3"
+        },
+        {
+          "op": "=",
+          "text": "待机",
+          "value": "0"
+        },
+        {
+          "op": "=",
+          "text": "停机",
+          "value": "2"
+        },
+        {
+          "op": "=",
+          "text": "其他",
+          "value": "6"
+        }
+      ],
+      "valueTextColor": "#000000",
+      "writeAllValues": false,
+      "writeLastValue": true,
+      "writeMetricNames": false
+    },
+    {
+      "adjustableFontSize": true,
+      "bgColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "bgThresholds": "",
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#ff7c7c",
+        "#feb64d",
+        "#5bc49f",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "compatibleThresholds": "50,80",
+      "createUid": "0afcd783-a88c-67fa-4fda-9f8e76e3c17c",
+      "datasource": "${DS_POSTGRESQL}",
+      "decimals": 1,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": true,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 12
+      },
+      "id": 12,
+      "interval": null,
+      "isMath": false,
+      "isMathInputVal": false,
+      "isMathTip": false,
+      "isMathUpgrade": false,
+      "labelFontSize": "1.8vw",
+      "labelFontSizePX": "35px",
+      "labelFontSizeVW": "1.8vw",
+      "labelFontSizeVal": "150%",
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "mathInputVal": "",
+      "maxDataPoints": 100,
+      "metricRuleObjArr": [],
+      "nullPointMode": "connected",
+      "nullText": null,
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "postColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "postThresholds": "",
+      "postfix": " %",
+      "postfixFontSize": "1.8vw",
+      "postfixFontSizePX": "35px",
+      "postfixFontSizeVW": "1.8vw",
+      "postfixFontSizeVal": "120%",
+      "preColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "preThresholds": "",
+      "prefix": "",
+      "prefixFontSize": "1.8vw",
+      "prefixFontSizePX": "35px",
+      "prefixFontSizeVW": "1.8vw",
+      "prefixFontSizeVal": "120%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "?column?",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT a.utilization_rate*100\nfrom oee.utilization_rate_day a\nwhere to_char(a.insert_time,'yyyy-MM-dd')=to_char(now(),'yyyy-MM-dd') and a.machine_id=(SELECT id from common.machine where area_node_id = (SELECT id from common.area_node where name_cn = '$area') order by id asc limit 1 offset 2) ",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "title": "站位3稼动率",
+      "titleAdjFontSize": true,
+      "titleBgColor": "#008CD6",
+      "titleFontSize": "1vw",
+      "titleFontSizeVal": "80%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "titleTxtColor": "rgb(255, 255, 255)",
+      "transparentRange": 1,
+      "type": "singlestat",
+      "valueFontSize": "1vw",
+      "valueFontSizePX": "35px",
+      "valueFontSizeVW": "1.8vw",
+      "valueFontSizeVal": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "FontSize": "80%",
+      "FontSizeValue": "100%",
+      "adjFontSize": true,
+      "backgroundColor": "rgba(128,128,128,0.1)",
+      "colorMaps": [
+        {
+          "color": "#5bc49f",
+          "text": "运行"
+        },
+        {
+          "color": "#ff7c7c",
+          "text": "异常"
+        },
+        {
+          "color": "#feb64d",
+          "text": "待机"
+        },
+        {
+          "color": "#C8C8C8",
+          "text": "停机"
+        },
+        {
+          "color": "#60acfc",
+          "text": "换线"
+        },
+        {
+          "color": "#9287e7",
+          "text": "其他"
+        }
+      ],
+      "createUid": "65fc9455-0ae6-7186-24ee-8aaef1464d4d",
+      "crosshairColor": "#8F070C",
+      "datasource": "${DS_POSTGRESQL}",
+      "display": "timeline",
+      "expandFromQueryS": 0,
+      "extendLastValue": true,
+      "gridPos": {
+        "h": 6,
+        "w": 20,
+        "x": 4,
+        "y": 12
+      },
+      "highlightOnMouseover": true,
+      "id": 15,
+      "legendSortBy": "-ms",
+      "lineColor": "rgba(0,0,0,0.1)",
+      "links": [],
+      "metricNameColor": "#000000",
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "rangeMaps": [
+        {
+          "from": "",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "rowHeight": 400,
+      "showLegend": true,
+      "showLegendNames": true,
+      "showLegendPercent": true,
+      "showLegendValues": true,
+      "showTimeAxis": true,
+      "targets": [
+        {
+          "alias": "",
+          "device": "select device",
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "plugin": "select plugin",
+          "rawQuery": true,
+          "rawSql": "select \r\n(case a.status_name\r\nwhen 'Run' then 1\r\nwhen 'Error' then 3\r\nwhen 'Idle' then 0\r\nwhen 'Off' then 2\r\nelse 6 end) as value,a.insert_time as time\r\nfrom oee.tricolor_tag_duration a\r\nwhere a.machine_id =(SELECT id from common.machine where area_node_id = (SELECT id from common.area_node where name_cn = '$area') order by id asc limit 1 offset 3) \r\nand to_char(a.insert_time::timestamp+'8 hour','yyyy-MM-dd')=to_char(now(),'yyyy-MM-dd') \r\norder by a.insert_time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "sensor": "select sensor",
+          "timeColumn": "time",
+          "tsType": "ts",
+          "type": "timeserie",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "textSize": 24,
+      "textSizeTime": 14,
+      "timeTextColor": "#d8d9da",
+      "title": "",
+      "titleAdjFontSize": true,
+      "titleFontSize": "1.4vw",
+      "titleFontSizeVal": "100%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "transparentRange": 1,
+      "type": "natel-discrete-panel",
+      "units": "short",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "运行",
+          "value": "1"
+        },
+        {
+          "op": "=",
+          "text": "异常",
+          "value": "3"
+        },
+        {
+          "op": "=",
+          "text": "待机",
+          "value": "0"
+        },
+        {
+          "op": "=",
+          "text": "停机",
+          "value": "2"
+        },
+        {
+          "op": "=",
+          "text": "其他",
+          "value": "6"
+        }
+      ],
+      "valueTextColor": "#000000",
+      "writeAllValues": false,
+      "writeLastValue": true,
+      "writeMetricNames": false
+    },
+    {
+      "adjustableFontSize": true,
+      "bgColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "bgThresholds": "",
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#ff7c7c",
+        "#feb64d",
+        "#5bc49f",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "compatibleThresholds": "50,80",
+      "createUid": "cf9b925f-1f32-7712-22ba-670d0b5d36c2",
+      "datasource": "${DS_POSTGRESQL}",
+      "decimals": 1,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": true,
+        "thresholdLabels": true,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 18
+      },
+      "id": 13,
+      "interval": null,
+      "isMath": false,
+      "isMathInputVal": false,
+      "isMathTip": false,
+      "isMathUpgrade": false,
+      "labelFontSize": "1.8vw",
+      "labelFontSizePX": "35px",
+      "labelFontSizeVW": "1.8vw",
+      "labelFontSizeVal": "150%",
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "mathInputVal": "",
+      "maxDataPoints": 100,
+      "metricRuleObjArr": [],
+      "nullPointMode": "connected",
+      "nullText": null,
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "postColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "postThresholds": "",
+      "postfix": " %",
+      "postfixFontSize": "1.8vw",
+      "postfixFontSizePX": "35px",
+      "postfixFontSizeVW": "1.8vw",
+      "postfixFontSizeVal": "120%",
+      "preColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "preThresholds": "",
+      "prefix": "",
+      "prefixFontSize": "1.8vw",
+      "prefixFontSizePX": "35px",
+      "prefixFontSizeVW": "1.8vw",
+      "prefixFontSizeVal": "120%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "?column?",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT a.utilization_rate*100\nfrom oee.utilization_rate_day a\nwhere to_char(a.insert_time,'yyyy-MM-dd')=to_char(now(),'yyyy-MM-dd') and a.machine_id=(SELECT id from common.machine where area_node_id = (SELECT id from common.area_node where name_cn = '$area') order by id asc limit 1 offset 3) ",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "title": "站位4稼动率",
+      "titleAdjFontSize": true,
+      "titleBgColor": "#008CD6",
+      "titleFontSize": "1vw",
+      "titleFontSizeVal": "80%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "titleTxtColor": "rgb(255, 255, 255)",
+      "transparentRange": 1,
+      "type": "singlestat",
+      "valueFontSize": "1vw",
+      "valueFontSizePX": "35px",
+      "valueFontSizeVW": "1.8vw",
+      "valueFontSizeVal": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "FontSize": "80%",
+      "FontSizeValue": "100%",
+      "adjFontSize": true,
+      "backgroundColor": "rgba(128,128,128,0.1)",
+      "colorMaps": [
+        {
+          "color": "#5bc49f",
+          "text": "运行"
+        },
+        {
+          "color": "#ff7c7c",
+          "text": "异常"
+        },
+        {
+          "color": "#feb64d",
+          "text": "待机"
+        },
+        {
+          "color": "#C8C8C8",
+          "text": "停机"
+        },
+        {
+          "color": "#60acfc",
+          "text": "换线"
+        },
+        {
+          "color": "#9287e7",
+          "text": "其他"
+        }
+      ],
+      "createUid": "b531ec9c-0fab-47c5-aedd-4ecf45ab4722",
+      "crosshairColor": "#8F070C",
+      "datasource": "${DS_POSTGRESQL}",
+      "display": "timeline",
+      "expandFromQueryS": 0,
+      "extendLastValue": true,
+      "gridPos": {
+        "h": 6,
+        "w": 20,
+        "x": 4,
+        "y": 18
+      },
+      "highlightOnMouseover": true,
+      "id": 16,
+      "legendSortBy": "-ms",
+      "lineColor": "rgba(0,0,0,0.1)",
+      "links": [],
+      "metricNameColor": "#000000",
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "rangeMaps": [
+        {
+          "from": "",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "rowHeight": 400,
+      "showLegend": true,
+      "showLegendNames": true,
+      "showLegendPercent": true,
+      "showLegendValues": true,
+      "showTimeAxis": true,
+      "targets": [
+        {
+          "alias": "",
+          "device": "select device",
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "plugin": "select plugin",
+          "rawQuery": true,
+          "rawSql": "select \r\n(case a.status_name\r\nwhen 'Run' then 1\r\nwhen 'Error' then 3\r\nwhen 'Idle' then 0\r\nwhen 'Off' then 2\r\nelse 6 end) as value,a.insert_time as time\r\nfrom oee.tricolor_tag_duration a\r\nwhere a.machine_id =(SELECT id from common.machine where area_node_id = (SELECT id from common.area_node where name_cn = '$area') order by id asc limit 1 offset 2) \r\nand to_char(a.insert_time::timestamp+'8 hour','yyyy-MM-dd')=to_char(now(),'yyyy-MM-dd') \r\norder by a.insert_time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "sensor": "select sensor",
+          "timeColumn": "time",
+          "tsType": "ts",
+          "type": "timeserie",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "textSize": 24,
+      "textSizeTime": 14,
+      "timeTextColor": "#d8d9da",
+      "title": "",
+      "titleAdjFontSize": true,
+      "titleFontSize": "1.4vw",
+      "titleFontSizeVal": "100%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "transparentRange": 1,
+      "type": "natel-discrete-panel",
+      "units": "short",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "运行",
+          "value": "1"
+        },
+        {
+          "op": "=",
+          "text": "异常",
+          "value": "3"
+        },
+        {
+          "op": "=",
+          "text": "待机",
+          "value": "0"
+        },
+        {
+          "op": "=",
+          "text": "停机",
+          "value": "2"
+        },
+        {
+          "op": "=",
+          "text": "其他",
+          "value": "6"
+        }
+      ],
+      "valueTextColor": "#000000",
+      "writeAllValues": false,
+      "writeLastValue": true,
+      "writeMetricNames": false
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 16,
+  "style": "gray",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_POSTGRESQL}",
+        "definition": "SELECT  b.name_cn  FROM common.area_layer a ,common.area_node b where  a.name_cn = '群组'  and  a.id = b.area_layer_id",
+        "hide": 0,
+        "includeAll": false,
+        "label": "群组",
+        "multi": false,
+        "name": "group",
+        "options": [],
+        "query": "SELECT  b.name_cn  FROM common.area_layer a ,common.area_node b where  a.name_cn = '群组'  and  a.id = b.area_layer_id",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_POSTGRESQL}",
+        "definition": "SELECT  name_cn  FROM common.area_node  where  upper_id =( SELECT  id FROM common.area_node where name_cn = '$group')",
+        "hide": 0,
+        "includeAll": false,
+        "label": "城市",
+        "multi": false,
+        "name": "area",
+        "options": [],
+        "query": "SELECT  name_cn  FROM common.area_node  where  upper_id =( SELECT  id FROM common.area_node where name_cn = '$group')",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now/d",
+    "to": "now"
+  },
+  "timepicker": {
+    "panelTimePicker": [
+      "Last 2 days",
+      "Last 7 days",
+      "Last 30 days",
+      "Last 90 days",
+      "Last 6 months",
+      "Last 1 year",
+      "Last 2 years",
+      "Last 5 years",
+      "Yesterday",
+      "Day before yesterday",
+      "This day last week",
+      "Previous week",
+      "Previous month",
+      "Previous year",
+      "Today",
+      "Today so far",
+      "This week",
+      "This week so far",
+      "This month",
+      "This month so far",
+      "This year",
+      "This year so far",
+      "Last 5 minutes",
+      "Last 15 minutes",
+      "Last 30 minutes",
+      "Last 1 hour",
+      "Last 3 hours",
+      "Last 6 hours",
+      "Last 12 hours",
+      "Last 24 hours"
+    ],
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "设备历史状态管理",
+  "uid": "pvvyiZLZk",
+  "version": 2
+}

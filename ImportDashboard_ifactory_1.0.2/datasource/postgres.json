@@ -1,0 +1,21 @@
+{
+    "name":"PostgreSQL",
+    "type":"postgres",
+    "access":"proxy",
+    "url":"localhost:5433",
+    "password":"123456",
+    "user":"postgres",
+    "database":"postgres",
+    "basicAuth":false,
+    "basicAuthUser": "",
+    "basicAuthPassword": "",
+    "withCredentials":false,
+	"jsonData": {
+    "postgresVersion": 903,
+    "sslmode": "disable"
+    },
+	"secureJsonFields": {
+        "password": true
+    },
+    "secureJsonData":{"password":"123456"}	
+}

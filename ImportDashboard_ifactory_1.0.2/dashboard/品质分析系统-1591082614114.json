@@ -1,0 +1,1511 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_POSTGRESQL",
+      "label": "PostgreSQL",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "postgres",
+      "pluginName": "PostgreSQL"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "advantech-datatable-panel",
+      "name": "Advanced Datatable",
+      "version": "1.1.16"
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "1.3.6"
+    },
+    {
+      "type": "panel",
+      "id": "grafana-piechart-panel",
+      "name": "Pie Chart",
+      "version": "1.1.37"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": "5.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "version": "5.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "singlestat",
+      "name": "Singlestat",
+      "version": "5.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": "5.0.0"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "mobileAuto": false,
+  "mobileUpgraded": true,
+  "panels": [
+    {
+      "adjFontSize": true,
+      "adjFontSize_Option": false,
+      "aliasColors": {
+        "其他": "rgb(251, 114, 147)",
+        "品質呼叫": "#00a0d6",
+        "品质原因1": "rgb(55, 162, 218)",
+        "品质原因2": "rgb(103, 224, 227)",
+        "品质原因3": "rgb(255, 219, 92)",
+        "品质呼叫": "rgb(255, 219, 92)",
+        "物料呼叫": "rgb(103, 224, 227)",
+        "設備工治具異常": "#d8ff8d",
+        "设备工治具异常": "rgb(55, 162, 218)"
+      },
+      "cacheTimeout": null,
+      "combine": {
+        "label": "Others",
+        "threshold": 0
+      },
+      "createUid": "eeb94021-7443-6128-5297-dc266b710f03",
+      "currenValueAlias": null,
+      "currentValue": null,
+      "datasource": "${DS_POSTGRESQL}",
+      "fontSize": "70%",
+      "format": "short",
+      "gridPos": {
+        "h": 7,
+        "w": 7,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "interval": null,
+      "isValueBold": false,
+      "isValueCheckUnit": false,
+      "legend": {
+        "enableCurrent": false,
+        "fakeValue": false,
+        "header": "时长(Min)",
+        "percentage": true,
+        "show": true,
+        "sort": null,
+        "sortDesc": null,
+        "values": true
+      },
+      "legendDisplay": "Muti line",
+      "legendType": "Right side",
+      "links": [],
+      "maxDataPoints": 3,
+      "middleFont": "100%",
+      "nullPointMode": "connected",
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "pieType": "donut",
+      "strokeWidth": 1,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT sum(extract(epoch FROM (release_time - start_time)))/60 as value,now() as time,'品质原因1' as metric\r\nfrom andon.error_log\r\nwhere tag_type_sub_name='quality_error' and error_type_detail_name='品质原因1' and to_char(start_time,'yyyy-MM-dd')>=to_char(now()::timestamp+'-7 day','yyyy-MM-dd')",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT sum(extract(epoch FROM (release_time - start_time)))/60 as value,now() as time,'品质原因2' as metric\r\nfrom andon.error_log\r\nwhere tag_type_sub_name='quality_error' and error_type_detail_name='品质原因2' and to_char(start_time,'yyyy-MM-dd')>=to_char(now()::timestamp+'-7 day','yyyy-MM-dd')",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT sum(extract(epoch FROM (release_time - start_time)))/60 as value,now() as time,'品质原因3' as metric\r\nfrom andon.error_log\r\nwhere tag_type_sub_name='quality_error' and error_type_detail_name='品质原因3' and to_char(start_time,'yyyy-MM-dd')>=to_char(now()::timestamp+'-7 day','yyyy-MM-dd')",
+          "refId": "C",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT sum(extract(epoch FROM (release_time - start_time)))/60 as value,now() as time,'其他' as metric\nfrom andon.error_log\nwhere tag_type_sub_name='quality_error' and error_type_detail_name='其他' and to_char(start_time,'yyyy-MM-dd')>=to_char(now()::timestamp+'-7 day','yyyy-MM-dd')",
+          "refId": "D",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "各不良原因时间占比(%)",
+      "titleAdjFontSize": true,
+      "titleBgColor": "rgb(0, 140, 214)",
+      "titleFontSize": "1vw",
+      "titleFontSizeVal": "80%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "titleTxtColor": "rgb(255, 255, 255)",
+      "transparentRange": 1,
+      "type": "grafana-piechart-panel",
+      "valueName": "current"
+    },
+    {
+      "content": "# title",
+      "createUid": "b42e2108-d25c-193f-a2da-8a1618d4e1ba",
+      "gridPos": {
+        "h": 1,
+        "w": 6,
+        "x": 7,
+        "y": 0
+      },
+      "id": 11,
+      "links": [],
+      "mode": "markdown",
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "title": "各不良原因次数统计",
+      "titleAdjFontSize": true,
+      "titleBgColor": "rgb(0, 140, 214)",
+      "titleFontSize": "1vw",
+      "titleFontSizeVal": "80%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "titleTxtColor": "rgb(255, 255, 255)",
+      "transparentRange": 1,
+      "type": "text"
+    },
+    {
+      "StatNameList": [
+        "A"
+      ],
+      "aliasColors": {
+        "value": "rgb(50,197,233)",
+        "其他": "rgb(251,114,147)",
+        "品质原因1": "rgb(55,162,218)",
+        "品质原因2": "rgb(103,224,227)",
+        "品质原因3": "rgb(255,219,92)",
+        "站位1": "rgb(55,162,218)",
+        "站位2": "rgb(50,197,233)",
+        "站位3": "rgb(103,224,227)",
+        "站位4": "rgb(159,230,184)",
+        "站位5": "rgb(255,219,92)"
+      },
+      "bars": true,
+      "barwidth": 1,
+      "createUid": "16d3c3ee-20b6-3bcb-2513-1e507bda8c68",
+      "currentTimePoints": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_POSTGRESQL}",
+      "discrete": false,
+      "discreteDataType": "max",
+      "discreteShiftDay": 0,
+      "fill": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 11,
+        "x": 13,
+        "y": 0
+      },
+      "id": 13,
+      "isMath": false,
+      "isMathInputVal": false,
+      "isMathTip": false,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "links": [],
+      "mathInputVal": "",
+      "metricRuleObjArr": [],
+      "needDrawCL": {
+        "isCl": false,
+        "lineColor": "rgba(0, 191, 255, 0.7)",
+        "target": "",
+        "value": ""
+      },
+      "needDrawLCL": {
+        "isLcl": false,
+        "lineColor": "rgba(255, 165, 0, 0.7)",
+        "target": "",
+        "value": ""
+      },
+      "needDrawUCL": {
+        "isUcl": false,
+        "lineColor": "rgba(0, 255, 255, 0.7)",
+        "target": "",
+        "value": ""
+      },
+      "nullPointMode": "null",
+      "openInNewTabOption": true,
+      "openIncludeTimeRangeOption": true,
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "percentage": false,
+      "plotDbclick": true,
+      "plotselectedchb": true,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "selectedStatName": "",
+      "seriesOverrides": [],
+      "skipUrl": null,
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT sum(cost_time) as value, to_date(mytime,'yyyy-MM-dd') as time\r\nfrom \r\n(SELECT cost_time,to_char(start_time,'yyyy-MM-dd') as mytime\r\n  from andon.error_log \r\n  where tag_type_sub_name='quality_error' and to_char(start_time,'yyyy-MM-dd')>=to_char(now()::timestamp+'-7 day','yyyy-MM-dd')) res\r\n  group by mytime\r\n  order by mytime",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "品质不良时长分析",
+      "titleAdjFontSize": true,
+      "titleBgColor": "rgb(0, 140, 214)",
+      "titleFontSize": "1vw",
+      "titleFontSizeVal": "80%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "titleTxtColor": "rgb(255, 255, 255)",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transparentRange": 1,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "format": "Autoscale",
+        "mode": "time",
+        "name": null,
+        "nsformat": "Autoscale",
+        "precision": "ms",
+        "show": true,
+        "timeRangeAdjustable": false,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "adjustableFontSize": true,
+      "bgColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "bgThresholds": "",
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "rgb(255, 255, 255)",
+        "#feb64d",
+        "#ff7c7c",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "compatibleThresholds": "3,5",
+      "createUid": "7dcb488b-c3c7-8045-64de-987fd0711a49",
+      "datasource": "${DS_POSTGRESQL}",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 7,
+        "y": 1
+      },
+      "id": 6,
+      "interval": null,
+      "isMath": false,
+      "isMathInputVal": false,
+      "isMathTip": false,
+      "isMathUpgrade": false,
+      "labelFontSize": "1.8vw",
+      "labelFontSizePX": "35px",
+      "labelFontSizeVW": "1.8vw",
+      "labelFontSizeVal": "120%",
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "mathInputVal": "",
+      "maxDataPoints": 100,
+      "metricRuleObjArr": [],
+      "nullPointMode": "connected",
+      "nullText": null,
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "postColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "postThresholds": "",
+      "postfix": "",
+      "postfixFontSize": "1.8vw",
+      "postfixFontSizePX": "35px",
+      "postfixFontSizeVW": "1.8vw",
+      "postfixFontSizeVal": "120%",
+      "preColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "preThresholds": "",
+      "prefix": "",
+      "prefixFontSize": "1.8vw",
+      "prefixFontSizePX": "35px",
+      "prefixFontSizeVW": "1.8vw",
+      "prefixFontSizeVal": "120%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "value",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT sum(extract(epoch FROM (release_time - start_time)))/60 as value,now() as time,'品质原因1' as metric\r\nfrom andon.error_log\r\nwhere tag_type_sub_name='quality_error' and error_type_detail_name='品质原因1' and to_char(start_time,'yyyy-MM-dd')>=to_char(now()::timestamp+'-7 day','yyyy-MM-dd')",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "title": "品质原因1",
+      "titleAdjFontSize": true,
+      "titleBgColor": "rgb(55,162,218,0.8)",
+      "titleFontSize": "0.8vw",
+      "titleFontSizeVal": "70%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "titleTxtColor": "rgb(255, 255, 255)",
+      "transparentRange": 1,
+      "type": "singlestat",
+      "valueFontSize": "1.8vw",
+      "valueFontSizePX": "35px",
+      "valueFontSizeVW": "1.8vw",
+      "valueFontSizeVal": "120%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "adjustableFontSize": true,
+      "bgColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "bgThresholds": "",
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "rgb(255, 255, 255)",
+        "#feb64d",
+        "#ff7c7c",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "compatibleThresholds": "3,5",
+      "createUid": "f599cc17-cd4e-005d-bef4-9dc44047a848",
+      "datasource": "${DS_POSTGRESQL}",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 10,
+        "y": 1
+      },
+      "id": 7,
+      "interval": null,
+      "isMath": false,
+      "isMathInputVal": false,
+      "isMathTip": false,
+      "isMathUpgrade": false,
+      "labelFontSize": "1.8vw",
+      "labelFontSizePX": "35px",
+      "labelFontSizeVW": "1.8vw",
+      "labelFontSizeVal": "120%",
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "mathInputVal": "",
+      "maxDataPoints": 100,
+      "metricRuleObjArr": [],
+      "nullPointMode": "connected",
+      "nullText": null,
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "postColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "postThresholds": "",
+      "postfix": "",
+      "postfixFontSize": "1.8vw",
+      "postfixFontSizePX": "35px",
+      "postfixFontSizeVW": "1.8vw",
+      "postfixFontSizeVal": "120%",
+      "preColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "preThresholds": "",
+      "prefix": "",
+      "prefixFontSize": "1.8vw",
+      "prefixFontSizePX": "35px",
+      "prefixFontSizeVW": "1.8vw",
+      "prefixFontSizeVal": "120%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "value",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT sum(extract(epoch FROM (release_time - start_time)))/60 as value,now() as time,'品质原因2' as metric\r\nfrom andon.error_log\r\nwhere tag_type_sub_name='quality_error' and error_type_detail_name='品质原因2' and to_char(start_time,'yyyy-MM-dd')>=to_char(now()::timestamp+'-7 day','yyyy-MM-dd')",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "title": "品质原因2",
+      "titleAdjFontSize": true,
+      "titleBgColor": "rgb(103,224,227,0.8)",
+      "titleFontSize": "0.8vw",
+      "titleFontSizeVal": "70%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "titleTxtColor": "rgb(255, 255, 255)",
+      "transparentRange": 1,
+      "type": "singlestat",
+      "valueFontSize": "1.8vw",
+      "valueFontSizePX": "35px",
+      "valueFontSizeVW": "1.8vw",
+      "valueFontSizeVal": "120%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "adjustableFontSize": true,
+      "bgColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "bgThresholds": "",
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "rgb(255, 255, 255)",
+        "#feb64d",
+        "#ff7c7c",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "compatibleThresholds": "3,5",
+      "createUid": "8d265ab3-fbf7-91fd-0b57-24bf4fcf9869",
+      "datasource": "${DS_POSTGRESQL}",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 7,
+        "y": 4
+      },
+      "id": 8,
+      "interval": null,
+      "isMath": false,
+      "isMathInputVal": false,
+      "isMathTip": false,
+      "isMathUpgrade": false,
+      "labelFontSize": "1.8vw",
+      "labelFontSizePX": "35px",
+      "labelFontSizeVW": "1.8vw",
+      "labelFontSizeVal": "120%",
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "mathInputVal": "",
+      "maxDataPoints": 100,
+      "metricRuleObjArr": [],
+      "nullPointMode": "connected",
+      "nullText": null,
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "postColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "postThresholds": "",
+      "postfix": "",
+      "postfixFontSize": "1.8vw",
+      "postfixFontSizePX": "35px",
+      "postfixFontSizeVW": "1.8vw",
+      "postfixFontSizeVal": "120%",
+      "preColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "preThresholds": "",
+      "prefix": "",
+      "prefixFontSize": "1.8vw",
+      "prefixFontSizePX": "35px",
+      "prefixFontSizeVW": "1.8vw",
+      "prefixFontSizeVal": "120%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "value",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT sum(extract(epoch FROM (release_time - start_time)))/60 as value,now() as time,'品质原因3' as metric\r\nfrom andon.error_log\r\nwhere tag_type_sub_name='quality_error' and error_type_detail_name='品质原因3' and to_char(start_time,'yyyy-MM-dd')>=to_char(now()::timestamp+'-7 day','yyyy-MM-dd')",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "title": "品质原因3",
+      "titleAdjFontSize": true,
+      "titleBgColor": "rgb(255,219,92,0.8)",
+      "titleFontSize": "0.8vw",
+      "titleFontSizeVal": "70%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "titleTxtColor": "rgb(255, 255, 255)",
+      "transparentRange": 1,
+      "type": "singlestat",
+      "valueFontSize": "1.8vw",
+      "valueFontSizePX": "35px",
+      "valueFontSizeVW": "1.8vw",
+      "valueFontSizeVal": "120%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "adjustableFontSize": true,
+      "bgColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "bgThresholds": "",
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "compatibleThresholds": "",
+      "createUid": "1b466fff-3faf-fb3f-dfbe-467cb169af44",
+      "datasource": "${DS_POSTGRESQL}",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 10,
+        "y": 4
+      },
+      "id": 9,
+      "interval": null,
+      "isMath": false,
+      "isMathInputVal": false,
+      "isMathTip": false,
+      "isMathUpgrade": false,
+      "labelFontSize": "1.8vw",
+      "labelFontSizePX": "35px",
+      "labelFontSizeVW": "1.8vw",
+      "labelFontSizeVal": "120%",
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "mathInputVal": "",
+      "maxDataPoints": 100,
+      "metricRuleObjArr": [],
+      "nullPointMode": "connected",
+      "nullText": null,
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "postColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "postThresholds": "",
+      "postfix": "",
+      "postfixFontSize": "1.8vw",
+      "postfixFontSizePX": "35px",
+      "postfixFontSizeVW": "1.8vw",
+      "postfixFontSizeVal": "120%",
+      "preColors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a",
+        "rgba(45, 91, 172, 0.9)",
+        "rgba(247, 243, 27, 0.9)",
+        "rgba(184, 27, 247, 0.9)"
+      ],
+      "preThresholds": "",
+      "prefix": "",
+      "prefixFontSize": "1.8vw",
+      "prefixFontSizePX": "35px",
+      "prefixFontSizeVW": "1.8vw",
+      "prefixFontSizeVal": "120%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "value",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT sum(extract(epoch FROM (release_time - start_time)))/60 as value,now() as time,'其他' as metric\r\nfrom andon.error_log\r\nwhere tag_type_sub_name='品质异常' and error_type_detail_name='其他' and to_char(start_time,'yyyy-MM-dd')>=to_char(now()::timestamp+'-7 day','yyyy-MM-dd')",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "title": "其他",
+      "titleAdjFontSize": true,
+      "titleBgColor": "rgb(251,114,147,0.8)",
+      "titleFontSize": "0.8vw",
+      "titleFontSizeVal": "70%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "titleTxtColor": "rgb(255, 255, 255)",
+      "transparentRange": 1,
+      "type": "singlestat",
+      "valueFontSize": "1.8vw",
+      "valueFontSizePX": "35px",
+      "valueFontSizeVW": "1.8vw",
+      "valueFontSizeVal": "120%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "activeCustomColumnIndex": 0,
+      "activeRowStyleIndex": 0,
+      "activeStatusIndex": 0,
+      "activeStyleIndex": 0,
+      "adjFontSize": true,
+      "al": [
+        {
+          "text": "异常信息"
+        },
+        {
+          "text": "站位"
+        },
+        {
+          "text": "工单"
+        },
+        {
+          "text": "料号"
+        },
+        {
+          "text": "触发时间"
+        },
+        {
+          "text": "解除时间"
+        },
+        {
+          "text": "处理时长"
+        },
+        {
+          "text": "人员"
+        },
+        {
+          "text": "备注"
+        }
+      ],
+      "allcolumns": [
+        "异常信息",
+        "站位",
+        "工单",
+        "料号",
+        "触发时间",
+        "解除时间",
+        "处理时长",
+        "人员",
+        "备注"
+      ],
+      "columns": [],
+      "compactRowsEnabled": false,
+      "conditions": "",
+      "conditionset": [],
+      "conditiontypes": [
+        "string",
+        "number"
+      ],
+      "createUid": "413467bd-3c01-884f-2bfb-30a83b650103",
+      "customColumns": [],
+      "customColumnsButton": true,
+      "customColumnsNum": 1,
+      "dataTableVersion": "new",
+      "dataType": "table",
+      "datasource": "${DS_POSTGRESQL}",
+      "datatablePagingType": "simple_numbers",
+      "datatableTheme": "basic_theme",
+      "editableMode": false,
+      "emptyData": false,
+      "errorFlag": false,
+      "evenRowBGColorSet": "",
+      "flag": "",
+      "fontSize": "70%",
+      "gridPos": {
+        "h": 16,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "headerHidden": false,
+      "hoverBGColorSet": "",
+      "hoverEnabled": true,
+      "id": 4,
+      "infoEnabled": true,
+      "isMath": false,
+      "isMathInputVal": false,
+      "isMathTip": false,
+      "lengthChangeEnabled": true,
+      "links": [],
+      "listcondition": "",
+      "listdefault": "--select--",
+      "listreddefault": "",
+      "locationData": [
+        "hostname",
+        "module_name"
+      ],
+      "mathInputVal": "",
+      "mergeColums": [],
+      "metricRuleObjArr": [],
+      "needcolumns": [],
+      "oddRowBGColorSet": "",
+      "orderColumnEnabled": true,
+      "pageSize": 12,
+      "pagingTypes": [
+        {
+          "text": "Page number buttons only",
+          "value": "numbers"
+        },
+        {
+          "text": "'Previous' and 'Next' buttons only",
+          "value": "simple"
+        },
+        {
+          "text": "'Previous' and 'Next' buttons, plus page numbers",
+          "value": "simple_numbers"
+        },
+        {
+          "text": "'First', 'Previous', 'Next' and 'Last' buttons",
+          "value": "full"
+        },
+        {
+          "text": "'First', 'Previous', 'Next' and 'Last' buttons, plus page numbers",
+          "value": "full_numbers"
+        },
+        {
+          "text": "'First' and 'Last' buttons, plus page numbers",
+          "value": "first_last_numbers"
+        }
+      ],
+      "panelHeight": 600,
+      "panelThemeStyle": "50,50,51",
+      "panelTitleShow": false,
+      "red": "--select--",
+      "redcondition": "",
+      "result": "",
+      "rowNumbersEnabled": false,
+      "rowStyles": [
+        {
+          "colNum": "1",
+          "rowAlias": null,
+          "rowNum": "1",
+          "rowhtml": "",
+          "rowopenNewTab": false,
+          "thresholdConfig": {
+            "colorMode": null,
+            "colors": [
+              "rgba(245, 54, 54, 0.9)",
+              "rgba(237, 129, 40, 0.89)",
+              "rgba(50, 172, 45, 0.97)",
+              "rgba(45, 91, 172, 0.9)",
+              "rgba(247, 243, 27, 0.9)",
+              "rgba(184, 27, 247, 0.9)"
+            ],
+            "thresholds": []
+          }
+        }
+      ],
+      "scroll": false,
+      "scrollHeight": "default",
+      "searchEnabled": false,
+      "searchbutton": "",
+      "searchcontrol": "down",
+      "showCellBorders": false,
+      "showHeader": true,
+      "showRowBorders": true,
+      "sort": {
+        "col": null,
+        "desc": true
+      },
+      "spreadfold": "spread",
+      "statucontrol": "down",
+      "statusLamp": [],
+      "stripedRowsEnabled": true,
+      "styles": [
+        {
+          "alias": "Time",
+          "align": "left",
+          "arraycolors": [
+            "rgb(23, 180, 16)",
+            "rgb(255, 197, 0)",
+            "rgb(210, 30, 0)"
+          ],
+          "bar": false,
+          "bold": false,
+          "colFontColorSet": "",
+          "colbgColor": "",
+          "colhtml": "",
+          "colopenNewTab": false,
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)",
+            "rgba(45, 91, 172, 0.9)",
+            "rgba(247, 243, 27, 0.9)",
+            "rgba(184, 27, 247, 0.9)"
+          ],
+          "colpostfix": "",
+          "colwidth": null,
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "icon": false,
+          "pattern": "Time",
+          "thresholds": [],
+          "thresholdsDisplay": [],
+          "type": "date",
+          "unit": "short",
+          "url": false
+        },
+        {
+          "alias": "处理时长(min)",
+          "align": "left",
+          "arraycolors": [
+            "rgb(23, 180, 16)",
+            "rgb(255, 197, 0)",
+            "rgb(210, 30, 0)"
+          ],
+          "bar": false,
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)",
+            "rgba(45, 91, 172, 0.9)",
+            "rgba(247, 243, 27, 0.9)",
+            "rgba(184, 27, 247, 0.9)"
+          ],
+          "colwidth": "",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 1,
+          "icon": false,
+          "mappingType": 1,
+          "pattern": "处理时长",
+          "thresholds": [],
+          "thresholdsDisplay": [],
+          "type": "number",
+          "unit": "locale",
+          "url": false
+        },
+        {
+          "alias": "",
+          "align": "center",
+          "arraycolors": [
+            "rgb(23, 180, 16)",
+            "rgb(255, 197, 0)",
+            "rgb(210, 30, 0)"
+          ],
+          "bar": false,
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)",
+            "rgba(45, 91, 172, 0.9)",
+            "rgba(247, 243, 27, 0.9)",
+            "rgba(184, 27, 247, 0.9)"
+          ],
+          "colwidth": "",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "icon": false,
+          "mappingType": 1,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "thresholdsDisplay": [],
+          "type": "number",
+          "unit": "short",
+          "url": false
+        }
+      ],
+      "tableFontVal": "0.8vw",
+      "tableTitleAlign": "left",
+      "tableTitleBold": true,
+      "tableTitleFont": "70%",
+      "tableTitleFontColorSet": "",
+      "tableTitleFontVal": "0.8vw",
+      "tableTitleadjFont": true,
+      "tableTitlebgColorSet": "",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT machine_name as \"站位\",\r\n  to_char(start_time,'yyyy-MM-dd hh24:mi:ss') as \"触发时间\",to_char(release_time,'yyyy-MM-dd hh24:mi:ss') as \"解除时间\",extract(epoch FROM (release_time - start_time))/60 as \"处理时长\", responsible_name as \"人员\"\r\n  from andon.error_log where tag_type_sub_name='quality_error' and to_char(start_time,'yyyy-MM-dd')>=to_char(now()::timestamp+'-7 day','yyyy-MM-dd')",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "themeOptions": {
+        "dark": "./css/datatable-dark.css",
+        "light": "./css/datatable-light.css"
+      },
+      "themes": [
+        {
+          "disabled": false,
+          "text": "Basic",
+          "value": "basic_theme"
+        },
+        {
+          "disabled": true,
+          "text": "Bootstrap",
+          "value": "bootstrap_theme"
+        },
+        {
+          "disabled": true,
+          "text": "Foundation",
+          "value": "foundation_theme"
+        },
+        {
+          "disabled": true,
+          "text": "ThemeRoller",
+          "value": "themeroller_theme"
+        }
+      ],
+      "title": "品质不良详情",
+      "titleAdjFontSize": true,
+      "titleBgColor": "rgb(0, 140, 214)",
+      "titleFontSize": "1vw",
+      "titleFontSizeVal": "80%",
+      "titleShowSize": "",
+      "titleTxtAlign": "center",
+      "titleTxtBold": "normal",
+      "titleTxtColor": "rgb(255, 255, 255)",
+      "transform": "table",
+      "transparentRange": 1,
+      "type": "advantech-datatable-panel"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 16,
+  "style": "gray",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {
+    "panelTimePicker": [
+      "Last 2 days",
+      "Last 7 days",
+      "Last 30 days",
+      "Last 90 days",
+      "Last 6 months",
+      "Last 1 year",
+      "Last 2 years",
+      "Last 5 years",
+      "Yesterday",
+      "Day before yesterday",
+      "This day last week",
+      "Previous week",
+      "Previous month",
+      "Previous year",
+      "Today",
+      "Today so far",
+      "This week",
+      "This week so far",
+      "This month",
+      "This month so far",
+      "This year",
+      "This year so far",
+      "Last 5 minutes",
+      "Last 15 minutes",
+      "Last 30 minutes",
+      "Last 1 hour",
+      "Last 3 hours",
+      "Last 6 hours",
+      "Last 12 hours",
+      "Last 24 hours"
+    ],
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "品质分析系统",
+  "uid": "20QTl-BZk",
+  "version": 2
+}

@@ -1,0 +1,34 @@
+{
+    "dashboard": {
+        "url": "https://dashboard-grafana.wise-paas.com",
+        "westUrl": "https://dashboard-grafana.wise-paas.com",
+        "eastUrl": "https://dashboard-grafana.wise-paas.com"
+    },
+    "language": [
+        {
+            "text": "繁體中文",
+            "abbr": "zh_tw",
+            "default": true
+        },
+        {
+            "text": "简体中文",
+            "abbr": "zh_cn"
+        },
+        {
+            "text": "English",
+            "abbr": "en"
+        }
+    ],
+    "theme": {
+        "style": "gray"
+    },
+    "menu": {
+        "swipeMenu": {
+            "initClosed": false,
+            "openFirstLayer": true
+        }
+    },
+    "heightAdjust": false,
+    "loginLogout": false,
+    "dashboardHeader": true
+}

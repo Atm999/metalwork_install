@@ -1,0 +1,157 @@
+{
+    "dashboard": {
+        "url": "https://dashboard-advims-v2-mpm.wise-paas.cn",
+        "westUrl": "https://dashboard-grafana.wise-paas.com/d/jxU8FYIWz/test999?orgId=1",
+        "eastUrl": "https://dashboard-grafana.wise-paas.com/d/JR_bFYSWk/singlestat0712?orgId=1"
+    },
+    "title": {
+        "description": "金屬加工管理系統",
+        "westTitle": "Building Energy KPI",
+        "eastTitle": "Realtime Energy Usage"
+    },
+    "frame": {
+        "main": {},
+        "west": {
+            "isGrafana": true,
+            "addTitle": true,
+            "slideshow": false,
+            "slideshowInterval": "30s",
+            "urlList": [
+                {
+                    "url": "https://dashboard-grafana.wise-paas.com/d/jxU8FYIWz/test999?orgId=1"
+                }
+            ]
+        },
+        "east": {
+            "isGrafana": true,
+            "addTitle": true,
+            "slideshow": false,
+            "slideshowInterval": "30s",
+            "urlList": [
+                {
+                    "url": "https://dashboard-grafana.wise-paas.com/d/JR_bFYSWk/singlestat0712?orgId=1"
+                }
+            ]
+        }
+    },
+    "menu": {
+        "list": [
+            {
+                "title": "工單生產管理",
+                "id": "IWS_Menu1",
+                "list": [
+                    {
+                        "title": "在制工單",
+                        "type": "dashboard",
+                        "dashboard": "/d/V9BVH23Wk/zai-zhi-gong-dan?orgId=1"
+                    },
+                    {
+                        "title": "當日進度",
+                        "type": "dashboard",
+                        "dashboard": "/d/62ohH23Zk/dang-ri-jin-du?orgId=1"
+                    },
+                    {
+                        "title": "未結及逾期工單",
+                        "type": "dashboard",
+                        "dashboard": "/d/--XaHhqWk/wei-jie-ji-yu-qi-gong-dan?orgId=1"
+                    },
+                    {
+                        "title": "生產效能分析",
+                        "type": "dashboard",
+                        "dashboard": "/d/VXP8N2qWz/sheng-chan-xiao-neng-fen-xi?orgId=1"
+                    }
+                ]
+            },
+            {
+                "title": "設備稼動率",
+                "id": "IWS_Menu2",
+                "list": [
+                    {
+                        "title": "設備時間稼動率分析",
+                        "type": "dashboard",
+                        "dashboard": "/d/BD73H2qZk/she-bei-shi-jian-jia-dong-lu-fen-xi?orgId=1"
+                    },
+                    {
+                        "title": "設備歷史狀態管理",
+                        "type": "dashboard",
+                        "dashboard": "/d/ePstD2qZz/she-bei-li-shi-zhuang-tai-guan-li?orgId=1"
+                    },
+                    {
+                        "title": "設備故障統計",
+                        "type": "dashboard",
+                        "dashboard": "/d/9irbD23Wk/she-bei-gu-zhang-tong-ji?orgId=1"
+                    }
+                ]
+            },
+            {
+                "title": "異常管理",
+                "id": "IWS_Menu3",
+                "list": [
+                    {
+                        "title": "異常總覽",
+                        "type": "dashboard",
+                        "dashboard": "/d/nqJN22qZz/yi-chang-zong-lan?refresh=5m&orgId=1"
+                    },
+                    {
+                        "title": "品質分析系統",
+                        "type": "dashboard",
+                        "dashboard": "/d/t5Nah23Zz/pin-zhi-fen-xi-xi-tong?orgId=1"
+                    },
+                    {
+                        "title": "線邊補料效率分析",
+                        "type": "dashboard",
+                        "dashboard": "/d/ZtLvx23Zk/xian-bian-bu-liao-xiao-lu-fen-xi?orgId=1"
+                    },
+                    {
+                        "title": "設備工治具異常分析",
+                        "type": "dashboard",
+                        "dashboard": "/d/Mdsq2h3Zz/she-bei-gong-zhi-ju-yi-chang-fen-xi?orgId=1"
+                    }
+                ]
+            },
+            {
+                "title": "人員績效管理",
+                "id": "IWS_Menu3",
+                "list": [
+                    {
+                        "title": "優秀部門人員評比",
+                        "type": "dashboard",
+                        "dashboard": "/d/-iCdaW3Wz/you-xiu-bu-men-ren-yuan-ping-bi?orgId=1"
+                    }
+                ]
+            },
+            {
+                "title": "設備計費",
+                "id": "IWS_Menu3",
+                "type": "dashboard",
+                "dashboard": "/d/iamE_Z3Wz/she-bei-ji-fei?refresh=1h&orgId=1"
+            }
+        ]
+    },
+    "alerting": {
+        "link": "https://dashboard-grafana.wise-paas.com",
+        "linkEnable": "false",
+        "api": "https://api-test-srpframe.wise-paas.com/test",
+        "webSocket": "wss://portal-rmm-develop.wise-paas.com/event/-1",
+        "visible": true,
+        "accumulative": false
+    },
+    "notice": {
+        "link": "https://dashboard-grafana.wise-paas.com",
+        "linkEnable": "true",
+        "api": "https://api-test-srpframe.wise-paas.com/test2",
+        "webSocket": "wss://portal-rmm-develop.wise-paas.com/event/-1",
+        "visible": true,
+        "accumulative": false
+    },
+    "marquee": {
+        "enable": "false",
+        "url": "https://api-test-srpframe.wise-paas.com/marqueetest",
+        "refresh": "never",
+        "text": "SRPFrame Demo"
+    },
+    "login": {
+        "visible": true
+    },
+    "refreshAlertNotice": "1m"
+}

@@ -1,0 +1,261 @@
+# ifactory-srp
+# docker stack deploy --compose-file docker-compose.yml --prune ifactory
+
+version: '3.6'
+
+services:
+  # ========== Database ==========
+  mongo:
+    image: mongo:4
+    restart: always
+    # comment out `ports` in production
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - db_network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+
+  postgres:
+    image: postgres:11-alpine
+    restart: always
+    ports:
+      - '5433:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - db_network
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: postgres
+
+
+  # ========== SRP ==========
+
+  emq:
+    image: emqx/emqx
+    ports:
+      - "18083:18083"
+      - "1883:1883"
+      - "8084:8084"
+      - "8883:8883"
+      - "8083:8083"
+    networks:
+      - db_network
+
+
+  metalwork-mqtt-server:
+    image: metalwork-mqtt-server:1.0.0
+    restart: always
+    depends_on:
+      - mongo
+      - postgres
+      - emq
+    networks:
+      - db_network
+    environment:
+      # mongo
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456 
+      MONGODB_HOST: mongo
+      MONGODB_PORT: 27017
+      MONGODB_DATABASE: metalwork
+      MONGODB_AUTH_SOURCE: admin
+      # postgres
+      PGHOST: postgres
+      PGPORT: 5432
+      PGUSER: postgres
+      PGDATABASE: postgres
+      POSTGRES_PASSWORD: 123456
+      # MQTT 
+      MQTT_HOST: ifactory_emq
+      MQTT_USER: admin
+      MQTT_PWD: public
+      SCADA_ID: ifactory_metalwork
+      MQTT_PORT: 1883
+
+
+  metalwork-api:
+    image: metalwork-api:1.0.0
+    restart: always
+    depends_on:
+      - mongo
+      - postgres
+    ports:
+      - '9001:80'
+    networks:
+      - db_network
+    environment:
+      # mongo
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456 
+      MONGODB_HOST: mongo
+      MONGODB_PORT: 27017
+      MONGODB_DATABASE: metalwork
+      MONGODB_AUTH_SOURCE: admin
+      # postgres
+      PGHOST: postgres
+      PGPORT: 5432
+      PGUSER: postgres
+      PGDATABASE: postgres
+      POSTGRES_PASSWORD: 123456
+      # mac
+      MAC_PATH: /run/secrets/mac
+      # time_zone
+      time_zone: 8
+      # module
+      module: All
+      # MQTT 
+      MQTT_HOST: ifactory_emq
+      MQTT_USER: admin
+      MQTT_PWD: public
+      MQTT_PORT: 1883
+      MQTT_TOPIC: iot-2/evt/wadata/fmt/andon
+    secrets:
+      - mac
+
+
+  metalwork-web:
+    image: metalwork-web:1.0.0
+    restart: always
+    depends_on:
+      - metalwork-api
+    ports:
+      - '9002:80'
+    networks:
+      - db_network
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      METALWORK-API: http://ifactory_metalwork-api:80/
+      # time_zone
+      time_zone: 8
+      # module
+      module: OEE,WOM,Andon
+
+  metalwork-onsite:
+    image: metalwork-onsite:1.0.0
+    restart: always
+    depends_on:
+      - metalwork-api
+    ports:
+      - '9003:80'
+    networks:
+      - db_network
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      METALWORK-API: http://ifactory_metalwork-api:80/
+      # time_zone
+      time_zone: 8
+
+      
+  metalwork-workorder:
+    image: metalwork-workorder:1.0.0
+    restart: always
+    depends_on:
+      - mongo
+      - postgres
+    networks:
+      - db_network
+    environment:
+      # mongo
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456 
+      MONGODB_HOST: mongo
+      MONGODB_PORT: 27017
+      MONGODB_DATABASE: metalwork
+      MONGODB_AUTH_SOURCE: admin
+      # postgres
+      PGHOST: postgres
+      PGPORT: 5432
+      PGUSER: postgres
+      PGDATABASE: postgres
+      POSTGRES_PASSWORD: 123456
+      # time_zone
+      time_zone: 8
+
+  metalwork-oee:
+    image: metalwork-oee:1.0.0
+    restart: always
+    depends_on:
+      - mongo
+      - postgres
+    networks:
+      - db_network
+    environment:
+      # mongo
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456 
+      MONGODB_HOST: mongo
+      MONGODB_PORT: 27017
+      MONGODB_AUTH_SOURCE: admin
+      MONGODB_DATABASE: metalwork
+      # postgres
+      PGHOST: postgres
+      PGPORT: 5432
+      PGUSER: postgres
+      PGDATABASE: postgres
+      POSTGRES_PASSWORD: 123456
+      # time_zone
+      time_zone: 8
+
+  metalwork-andon:
+    image: metalwork-andon:1.0.0
+    restart: always
+    depends_on:
+      - metalwork-notice
+      - mongo
+      - postgres
+    networks:
+      - db_network
+    environment:
+      # mongo
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456 
+      MONGODB_HOST: mongo
+      MONGODB_PORT: 27017
+      MONGODB_DATABASE: metalwork
+      MONGODB_AUTH_SOURCE: admin
+      # postgres
+      PGHOST: postgres
+      PGPORT: 5432
+      PGUSER: postgres
+      PGDATABASE: postgres
+      POSTGRES_PASSWORD: 123456
+      # notice-API
+      METALWORK-NOTICE: http://ifactory_metalwork-api:80
+      # Webaccess 信息
+      Webaccess_Host: 127.0.0.1
+      Webaccess_Project: MPM
+      Webaccess_UserName: admin
+      Webaccess_Pwd: 'null'
+      # MQTT
+      MQTT_Project: ifactory_emq
+      MQTT_USER: admin
+      MQTT_PWD: public
+      MQTT_port: 1883
+      MQTT_Subscribe: iot-2/evt/#
+      MQTT_Publish : iot-2/evt/wacmd/fmt/ifactory_metalwork
+      # time_zone
+      time_zone: 8
+      METALWORK-API: http://ifactory_metalwork-api:80/
+
+
+
+
+networks:
+  db_network:
+    driver: overlay
+    attachable: true
+
+volumes:
+  mongo_data:
+  postgres_data:
+
+secrets:
+  mac:
+    external: true
+
